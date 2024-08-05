@@ -8,9 +8,9 @@ import { z } from "zod";
 
 export async function register(req: FastifyRequest, reply: FastifyReply) {
     const registerBodySchema = z.object({
-        name: z.string().min(1).max(100),
+        name: z.string().min(1),
         email: z.string().email(),
-        password: z.string().min(8).max(100),
+        password: z.string().min(6),
     })
 
     const { name, email, password } = registerBodySchema.parse(req.body);
