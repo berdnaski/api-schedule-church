@@ -1,0 +1,25 @@
+{
+  "name": "schedule-church",
+  "version": "1.0.0",
+  "description": "Schedule Church",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "node build/server.js",
+    "build": "tsup src --out-dir build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "22.1.0",
+    "tsup": "8.2.4",
+    "tsx": "4.16.5",
+    "typescript": "5.5.4"
+  },
+  "dependencies": {
+    "dotenv": "16.4.5",
+    "fastify": "4.28.1",
+    "zod": "3.23.8"
+  }
+}
