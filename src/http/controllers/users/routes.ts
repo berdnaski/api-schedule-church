@@ -1,20 +1,20 @@
 import { FastifyInstance } from "fastify";
-import { register } from "./register";
-import { authenticate } from "./authenticate";
 import { dashboard } from "./dashboard";
-import { verifyJWT } from "../../middlewares/verify-jwt";
-import { refresh } from "./refresh";
 import { listUsers } from "./list-users";
+import { verifyJWT } from "@/http/middlewares/verify-jwt";
+import { register } from "./register";
+import { verifyUserRole } from "@/http/middlewares/veriffy-user-role";
+import { updateUserRole } from "./updated-user-role";
 
-export async function appRoutes(app: FastifyInstance) {
+
+export async function usersRoutes(app: FastifyInstance) {
     app.post('/users', register)
 
-    app.post('/login', authenticate);
-
-    app.patch('/token/refresh', refresh);
-
+    app.addHook('onRequest', verifyJWT)
     // Authenticated
-    app.get('/dashboard', { onRequest: [verifyJWT] }, dashboard);
+    app.get('/dashboard', dashboard);
 
-    app.get('/users', { onRequest: [verifyJWT] }, listUsers);
+    app.get('/users', { onRequest: [verifyUserRole('ADMIN')] }, listUsers);
+
+    app.patch('/users/update-role', { onRequest: [verifyUserRole('ADMIN')]}, updateUserRole);
 }

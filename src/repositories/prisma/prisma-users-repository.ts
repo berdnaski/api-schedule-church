@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { Prisma, User} from "@prisma/client";
+import { Prisma, Role, User} from "@prisma/client";
 import { UsersRepository } from "../users-repository";
 
 export class PrismaUsersRepository implements UsersRepository {
@@ -26,6 +26,13 @@ export class PrismaUsersRepository implements UsersRepository {
         const users = await prisma.user.findMany();
 
         return users;
+    }
+
+    async updateRole(id: string, role: Role): Promise<User> {
+        return prisma.user.update({
+            where: { id },
+            data: { role },
+        })
     }
 
     async create(data: Prisma.UserCreateInput) {
