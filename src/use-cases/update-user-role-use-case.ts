@@ -29,8 +29,13 @@ export class UpdateUserRoleUseCase {
         }
 
         const updatedUser = await this.usersRepository.updateRole(userId, newRole);
+        
         return {
-            user: updatedUser,
+            user: {
+                id: updatedUser.id,
+                role: updatedUser.role
+            }
+
         };
     }
 }
