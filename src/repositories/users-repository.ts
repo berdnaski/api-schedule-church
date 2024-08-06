@@ -5,5 +5,6 @@ export interface UsersRepository {
     findByEmail(email: string): Promise<User | null>
     listAll(): Promise<User[]>
     updateRole(id: string, role: Role): Promise<User>
+    updateDepartment(userId: string, departmentId: string): Promise<User>
     create(data: Prisma.UserCreateInput): Promise<User>
 }

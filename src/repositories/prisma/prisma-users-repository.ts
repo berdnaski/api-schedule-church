@@ -1,45 +1,49 @@
-import { prisma } from "@/lib/prisma";
-import { Prisma, Role, User} from "@prisma/client";
+import { Prisma, Role, User } from "@prisma/client";
 import { UsersRepository } from "../users-repository";
+import { prisma } from "@/lib/prisma";
 
 export class PrismaUsersRepository implements UsersRepository {
-    async findById(id: string) {
-        const user = await prisma.user.findUnique({
-            where: {
-                id,
-            }
-        })
-        
-        return user;
-    }
-    async findByEmail(email: string) {
-        const user = await prisma.user.findUnique({
-            where: {
-                email
-            },
-        })
-
-        return user;
+    async findById(id: string): Promise<User | null> {
+        return prisma.user.findUnique({
+            where: { id },
+        });
     }
 
-    async listAll() {
-        const users = await prisma.user.findMany();
+    async findByEmail(email: string): Promise<User | null> {
+        return prisma.user.findUnique({
+            where: { email },
+        });
+    }
 
-        return users;
+    async listAll(): Promise<User[]> {
+        return prisma.user.findMany();
     }
 
     async updateRole(id: string, role: Role): Promise<User> {
         return prisma.user.update({
             where: { id },
             data: { role },
-        })
+        });
     }
 
-    async create(data: Prisma.UserCreateInput) {
-        const user = await prisma.user.create({
-            data,
-        })
+    async updateDepartment(userId: string, departmentId: string): Promise<User> {
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+        });
 
-        return user;
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        return prisma.user.update({
+            where: { id: userId },
+            data: { departmentId },
+        });
+    }
+
+    async create(data: Prisma.UserCreateInput): Promise<User> {
+        return prisma.user.create({
+            data,
+        });
     }
 }
