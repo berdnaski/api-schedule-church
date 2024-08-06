@@ -1,6 +1,6 @@
 import { UsersRepository } from "@/repositories/users-repository";
-import { User } from "@prisma/client";
-import { UserResponse } from "./interfaces/user-response";
+import { UserResponse } from "../interfaces/user-response";
+
 
 export interface ListUsersUseCaseResponse {
     users: UserResponse[];

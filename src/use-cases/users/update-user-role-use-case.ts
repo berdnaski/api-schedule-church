@@ -1,6 +1,6 @@
 import { UsersRepository } from "@/repositories/users-repository";
-import { UnauthorizedError } from "./errors/unauthorized-error";
 import { Role } from "@prisma/client";
+import { UnauthorizedError } from "../errors/unauthorized-error";
 
 export interface UpdateUserRoleUseCaseRequest {
     adminId: string;  

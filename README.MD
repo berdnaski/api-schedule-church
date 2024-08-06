@@ -1,32 +1,38 @@
-# App
+# Schedule Church
 
-Schedule Church
+Bem-vindo ao **Schedule Church**, uma aplicação projetada para ajudar a gerenciar escalas, check-ins e muito mais para igrejas. Este README guiará você através das funcionalidades, instalação e uso da aplicação.
 
-## RFs (Requisitos funcionais) -> Funcionalidade
+## Sumário
 
-- [x] Deve ser possível se cadastrar.
-- [x] Deve ser possível se autenticar.
-- [] Deve ser possível obter o perfil de um usuário logado.
-- [] Deve ser possível obter o número de check-ins realizados pelo usuário logado.
-- [] Deve ser possível o usuário obter seu histórico de escalas.
-- [] Deve ser possível o usuário visualizar escalas futuras e passadas.
-- [] Deve ser possível o usuário buscar academias pelo nome.
-- [] Deve ser possível o usuário realizar check-in em uma academia.
-- [] Deve ser possível validar o check-in de um usuário.
-- [] Deve ser possível cadastrar uma academia.
+1. [Funcionalidades](#funcionalidades)
+2. [Requisitos](#requisitos)
+3. [Instalação](#instalação)
+4. [Uso](#uso)
+5. [Endpoints da API](#endpoints-da-api)
+6. [Modelos de Dados](#modelos-de-dados)
+7. [Contribuições](#contribuições)
+8. [Licença](#licença)
 
-## RNs (Regras de negócio) -> Quais as condições aplicadas
+## Funcionalidades
 
-- [x] O usuário não deve poder se cadastrar com um email duplicado.
-- [] O usuário não pode fazer 2 check-ins no mesmo dia.
-- [] O usuário não pode fazer check-in se não estiver perto (100m) da academia.
-- [] O check-in só pode ser validado até 20 minutos após criado.
-- [] O check-in só pode ser validado por administradores.
-- [] A academia só pode ser cadastrada por administradores.
+- **Gerenciamento de Usuários**:
+  [x] Registrar e autenticar usuários.
+  [x] Listar perfis de usuários.
+  [x] Atualizar roles de usuários (apenas admin).
+  [] Visualizar perfil unico de usuário.
 
-## RNFs (Requisitos não-funcionais) -> Coisas que só a gente vamos entender
+- **Check-Ins**:
+  [x] Registrar check-ins na escala.
+  [] Recusar um cehck-in de escala.
 
-- [] A senha do usuário precisa ser criptografada.
-- [] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL
-- [] Todas listas de dados precisam estar paginadas com 20 itens por página.
-- [] O usuário deve ser identificado por um JWT (JSON Web Token).
+- **Escalas**:
+  [] Visualizar e gerenciar escalas (passadas e futuras).
+  [] Acessar o histórico de escalas do usuário.
+
+## Requisitos
+
+[x] **Node.js**: Versão 14.x ou superior
+[x] **PostgreSQL**: Banco de dados para persistência dos dados
+[x] **Fastify**: Framework web
+[x] **Prisma**: ORM para interações com o banco de dados
+[x] **JWT**: Para autenticação de usuários

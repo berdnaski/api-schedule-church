@@ -1,5 +1,5 @@
 import { PrismaUsersRepository } from "@/repositories/prisma/prisma-users-repository";
-import { GetUserDashboardUseCase } from "../get-user-dashboard";
+import { GetUserDashboardUseCase } from "../users/get-user-dashboard";
 
 export function makeGetUserDashboardUseCase() {
     const usersRepository = new PrismaUsersRepository()

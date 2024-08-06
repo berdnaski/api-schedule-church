@@ -30,3 +30,26 @@ enum Role {
   MEMBER
   LEADER
 }
+
+model Department {
+  id          String     @id @default(uuid())
+  name        String
+  description String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  Schedule    Schedule[]
+
+  @@map("departments")
+}
+
+model Schedule {
+  id           String     @id @default(uuid())
+  departmentId String
+  date         DateTime
+  time         DateTime
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  department   Department @relation(fields: [departmentId], references: [id])
+
+  @@map("schedules")
+}
