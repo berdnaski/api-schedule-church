@@ -1,22 +1,22 @@
 import { UsersRepository } from "@/repositories/users-repository";
 import { User } from "@prisma/client";
 
-interface GetUserProfileUseCaseRequest {
+interface GetUserDashboardUseCaseRequest {
     userId: string;
 }
 
-interface GetUserProfileUseCaseResponse {
+interface GetUserDashboardUseCaseResponse {
     user: User;
 }
 
-export class GetUserProfileUseCase {
+export class GetUserDashboardUseCase {
     constructor(
         private usersRepository: UsersRepository,
     ) {}
 
     async execute({
         userId,
-    }: GetUserProfileUseCaseRequest): Promise<GetUserProfileUseCaseResponse> {
+    }: GetUserDashboardUseCaseRequest): Promise<GetUserDashboardUseCaseResponse> {
         const user = await this.usersRepository.findById(userId);
 
         if(!user) {
