@@ -22,5 +22,6 @@ export async function addUserDepartment(req: FastifyRequest, reply: FastifyReply
         if (err instanceof Error) {
             return reply.status(400).send({ message: err.message });
         }
+        return reply.status(500).send({ message: 'Internal server error' });
     }
 }

@@ -38,6 +38,9 @@ export class PrismaUsersRepository implements UsersRepository {
         return prisma.user.update({
             where: { id: userId },
             data: { departmentId },
+            include: {
+                department: true,
+            }
         });
     }
 
