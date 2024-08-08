@@ -1,12 +1,7 @@
+import { UnauthorizedError } from "@/lib/errors/unauthorized-error";
 import { UsersRepository } from "@/repositories/users-repository";
 import { Role } from "@prisma/client";
-import { UnauthorizedError } from "../errors/unauthorized-error";
-
-export interface UpdateUserRoleUseCaseRequest {
-    adminId: string;  
-    userId: string;  
-    newRole: Role;  
-}
+import { UpdateUserRoleUseCaseRequest } from "../dtos/update-user-role-dto";
 
 export class UpdateUserRoleUseCase {
     constructor(

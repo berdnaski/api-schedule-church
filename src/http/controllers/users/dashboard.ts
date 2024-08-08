@@ -1,4 +1,4 @@
-import { makeGetUserDashboardUseCase } from "@/use-cases/factories/make-get-user-dashboard-use-case";
+import { makeGetUserDashboardUseCase } from "@/lib/factories/make-get-user-dashboard-use-case";
 import { FastifyReply, FastifyRequest } from "fastify";
 
 export async function dashboard(req: FastifyRequest, reply: FastifyReply) {

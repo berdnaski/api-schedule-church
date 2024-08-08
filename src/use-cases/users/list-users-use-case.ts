@@ -1,10 +1,6 @@
+import { UserResponse } from "@/lib/interfaces/user-response";
 import { UsersRepository } from "@/repositories/users-repository";
-import { UserResponse } from "../interfaces/user-response";
-
-
-export interface ListUsersUseCaseResponse {
-    users: UserResponse[];
-}
+import { ListUsersUseCaseResponse } from "../dtos/list-users-dto-response";
 
 export class ListUsersUseCase {
     constructor(

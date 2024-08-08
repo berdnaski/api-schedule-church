@@ -1,18 +1,9 @@
-import { prisma } from "@/lib/prisma";
 import { UsersRepository } from "@/repositories/users-repository";
 import { hash } from "bcryptjs";
 import { User } from "@prisma/client";
-import { UserAlreadyExistsError } from "../errors/user-already-exists-error";
-
-interface RegisterUseCaseRequest {
-    name: string;
-    email: string;
-    password: string;
-}
-
-interface RegisterUseCaseResponse {
-    user: User;
-}
+import { UserAlreadyExistsError } from "@/lib/errors/user-already-exists-error";
+import { RegisterUseCaseRequest } from "../dtos/register-dto-request";
+import { RegisterUseCaseResponse } from "../dtos/register-dto-response";
 
 export class RegisterUseCase {
     constructor(private usersRepository: UsersRepository) {}

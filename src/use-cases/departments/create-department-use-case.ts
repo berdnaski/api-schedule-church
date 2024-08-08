@@ -1,9 +1,5 @@
 import { DepartmentsRepository } from "@/repositories/departments-repository";
-
-export interface CreateDepartamentUseCaseRequest {
-    name: string;
-    description: string;
-}
+import { CreateDepartamentUseCaseRequest } from "../dtos/create-department-dto-request";
 
 export class CreateDepartamentUseCase {
     constructor(

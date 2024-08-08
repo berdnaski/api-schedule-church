@@ -1,4 +1,3 @@
-// src/repositories/prisma/prisma-departments-repository.ts
 import { PrismaClient, Department, Prisma } from "@prisma/client";
 import { DepartmentsRepository } from "../departments-repository";
 

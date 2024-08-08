@@ -1,10 +1,6 @@
 import { UsersRepository } from "@/repositories/users-repository";
 import { DepartmentsRepository } from "@/repositories/departments-repository";
-
-export interface AddUserDepartmentUseCaseRequest {
-    userId: string;
-    departmentId: string;
-}
+import { AddUserDepartmentUseCaseRequest } from "../dtos/add-user-department-dto-request";
 
 export class AddUserDepartmentUseCase {
     constructor(

@@ -1,13 +1,7 @@
 import { UsersRepository } from "@/repositories/users-repository";
 import { User } from "@prisma/client";
-
-interface GetUserDashboardUseCaseRequest {
-    userId: string;
-}
-
-interface GetUserDashboardUseCaseResponse {
-    user: User;
-}
+import { GetUserDashboardUseCaseRequest } from "../dtos/get-user-dashboard-dto-request";
+import { GetUserDashboardUseCaseResponse } from "../dtos/get-user-dashboard-dto-response";
 
 export class GetUserDashboardUseCase {
     constructor(

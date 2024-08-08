@@ -1,4 +1,4 @@
-import { makeAddUserDepartmentUseCase } from "@/use-cases/factories/make-add-user-department-use-case";
+import { makeAddUserDepartmentUseCase } from "@/lib/factories/make-add-user-department-use-case";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 

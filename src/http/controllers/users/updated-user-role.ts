@@ -1,5 +1,5 @@
-import { UnauthorizedError } from "@/use-cases/errors/unauthorized-error";
-import { makeUpdateUserRoleUseCase } from "@/use-cases/factories/make-update-user-role-use-case";
+import { UnauthorizedError } from "@/lib/errors/unauthorized-error";
+import { makeUpdateUserRoleUseCase } from "@/lib/factories/make-update-user-role-use-case";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
