@@ -11,15 +11,14 @@ datasource db {
 }
 
 model User {
-  id            String      @id @default(uuid())
+  id            String       @id @default(uuid())
   name          String
-  email         String      @unique
+  email         String       @unique
   password_hash String
-  role          Role        @default(MEMBER)
-  departmentId  String?
-  department    Department? @relation(fields: [departmentId], references: [id])
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  role          Role         @default(MEMBER)
+  departments   Department[] @relation("UserDepartments")
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 
   @@map("users")
 }
@@ -37,7 +36,7 @@ model Department {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   schedules   Schedule[]
-  users       User[]
+  users       User[]     @relation("UserDepartments")
 
   @@map("departments")
 }

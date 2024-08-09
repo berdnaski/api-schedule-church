@@ -16,7 +16,7 @@ export class AddUserDepartmentUseCase {
 
         const user = await this.usersRepository.updateDepartment(userId, departmentId);
 
-        if(!user) {
+        if (!user) {
             throw new Error("User not found");
         }
 
@@ -26,6 +26,6 @@ export class AddUserDepartmentUseCase {
             email: user.email,
             role: user.role,
             department: department.name,
-        }
+        };
     }
 }
