@@ -9,18 +9,16 @@ export class ListUsersUseCase {
 
     async execute(): Promise<ListUsersUseCaseResponse> {
         const users = await this.usersRepository.listAll();
-        
 
         const listUsers: UserResponse[] = users.map(user => ({
             id: user.id,
             name: user.name,
             email: user.email,
             role: user.role,
-            department: user.departmentId,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
         }));
 
-        return { users: listUsers }
+        return { users: listUsers };
     }
 }

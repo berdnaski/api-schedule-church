@@ -1,7 +1,6 @@
-import { DepartmentDTO } from "@/use-cases/dtos/department-dto";
 import { Role } from "@prisma/client";
 
-export interface UserResponse {
+export interface UserDTO {
     id: string;
     name: string;
     email: string;

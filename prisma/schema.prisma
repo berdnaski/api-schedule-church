@@ -33,10 +33,11 @@ model Department {
   id          String     @id @default(uuid())
   name        String
   description String
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
   schedules   Schedule[]
   users       User[]     @relation("UserDepartments")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("departments")
 }
