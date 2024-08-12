@@ -6,6 +6,6 @@ export interface UsersRepository {
     listAll(): Promise<User[]>
     listByDepartment(departmentId: string): Promise<User[]>
     updateRole(id: string, role: Role): Promise<User>
-    updateDepartment(userId: string, departmentId: string): Promise<User>
+    updateDepartment(userId: string, departmentId: string, add: boolean): Promise<User>
     create(data: Prisma.UserCreateInput): Promise<User>
 }

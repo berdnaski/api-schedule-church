@@ -5,6 +5,7 @@ import { verifyUserRole } from "@/http/middlewares/veriffy-user-role";
 import { addUserDepartment } from "./add-user-department";
 import { listUsersByDepartment } from "./list-user-by-department";
 import { deleteDepartment } from "./delete-department";
+import { removeUserDepartment } from "./remove-user-department";
 
 
 export async function departmentsRoutes(app: FastifyInstance) {
@@ -16,4 +17,5 @@ export async function departmentsRoutes(app: FastifyInstance) {
     app.get('/departments/:departmentId/users', listUsersByDepartment);
 
     app.delete('/departments/:departmentId', { onRequest: [verifyUserRole('ADMIN')] }, deleteDepartment);
+    app.delete('/users/:userId/departments/:departmentId', removeUserDepartment);
 }

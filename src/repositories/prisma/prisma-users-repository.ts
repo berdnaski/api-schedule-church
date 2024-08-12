@@ -45,7 +45,7 @@ export class PrismaUsersRepository implements UsersRepository {
         });
     }
 
-    async updateDepartment(userId: string, departmentId: string): Promise<User> {
+    async updateDepartment(userId: string, departmentId: string, add: boolean): Promise<User> {
         const user = await prisma.user.findUnique({
             where: { id: userId },
             include: { departments: true },
@@ -55,14 +55,20 @@ export class PrismaUsersRepository implements UsersRepository {
             throw new Error("User not found");
         }
 
+        const updateData: Prisma.UserUpdateInput = {
+            departments: add ? {
+                connect: { id: departmentId },
+            } : {
+                disconnect: { id: departmentId },
+            },
+        };
+
         return prisma.user.update({
             where: { id: userId },
-            data: {
-                departments: {
-                    connect: { id: departmentId },
-                },
+            data: updateData,
+            include: {
+                departments: true,
             },
-            include: { departments: true },
         });
     }
 

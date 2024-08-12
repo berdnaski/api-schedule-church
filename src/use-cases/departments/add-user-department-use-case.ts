@@ -14,7 +14,7 @@ export class AddUserDepartmentUseCase {
             throw new Error("Department not found");
         }
 
-        const user = await this.usersRepository.updateDepartment(userId, departmentId);
+        const user = await this.usersRepository.updateDepartment(userId, departmentId, true);
 
         if (!user) {
             throw new Error("User not found");
