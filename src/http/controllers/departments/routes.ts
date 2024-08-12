@@ -6,6 +6,7 @@ import { addUserDepartment } from "./add-user-department";
 import { listUsersByDepartment } from "./list-user-by-department";
 import { deleteDepartment } from "./delete-department";
 import { removeUserDepartment } from "./remove-user-department";
+import { editDepartment } from "./edit-department";
 
 
 export async function departmentsRoutes(app: FastifyInstance) {
@@ -18,4 +19,6 @@ export async function departmentsRoutes(app: FastifyInstance) {
 
     app.delete('/departments/:departmentId', { onRequest: [verifyUserRole('ADMIN')] }, deleteDepartment);
     app.delete('/users/:userId/departments/:departmentId', removeUserDepartment);
+
+    app.put('/departments/:departmentId', { onRequest: [verifyUserRole('ADMIN')] }, editDepartment);
 }

@@ -5,4 +5,5 @@ export interface DepartmentsRepository {
     listAll(): Promise<Department[]>;
     create(data: Prisma.DepartmentCreateInput): Promise<Department>;
     delete(id: string): Promise<void>;
+    update(id: string, data: Prisma.DepartmentUpdateInput): Promise<Department>;
 }

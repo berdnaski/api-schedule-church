@@ -20,6 +20,13 @@ export class PrismaDepartments implements DepartmentsRepository {
         });
     }
 
+    update(id: string, data: Prisma.DepartmentUpdateInput): Promise<Department> {
+        return prisma.department.update({
+            where: { id },
+            data,
+        });
+    }
+
     async create(data: Prisma.DepartmentCreateInput): Promise<Department> {
         return prisma.department.create({
             data,
