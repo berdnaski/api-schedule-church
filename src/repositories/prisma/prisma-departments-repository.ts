@@ -1,4 +1,3 @@
-// src/repositories/prisma-departments-repository.ts
 import { PrismaClient, Department, Prisma } from "@prisma/client";
 import { DepartmentsRepository } from "../departments-repository";
 
@@ -13,6 +12,12 @@ export class PrismaDepartments implements DepartmentsRepository {
 
     async listAll(): Promise<Department[]> {
         return prisma.department.findMany();
+    }
+
+    async delete(id: string): Promise<void> { 
+        await prisma.department.delete({
+            where: { id },
+        });
     }
 
     async create(data: Prisma.DepartmentCreateInput): Promise<Department> {
