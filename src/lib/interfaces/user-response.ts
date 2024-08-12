@@ -8,4 +8,5 @@ export interface UserResponse {
     role: Role;
     createdAt: Date;
     updatedAt: Date;
+    departments: DepartmentDTO[];
 }

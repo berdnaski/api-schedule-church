@@ -15,6 +15,12 @@ export class RemoveUserDepartmentUseCase {
             throw new Error("User or department not found");
         }
 
+        const isAssociated = user.departments.some(dept => dept.id === departmentId);
+
+        if (!isAssociated) {
+            throw new Error("User is not associated with the department");
+        }
+
         await this.usersRepository.updateDepartment(userId, departmentId, false);
     }
 }
