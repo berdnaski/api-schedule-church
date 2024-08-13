@@ -6,6 +6,13 @@ import { EditScheduleDTO } from "@/use-cases/dtos/edit-schedule-dto";
 const prisma = new PrismaClient();
 
 export class PrismaSchedulesRepository implements SchedulesRepository {
+    async delete(id: string) {
+        await prisma.schedule.delete({
+            where: {
+                id,
+            }
+        })
+    }
     async update(id: string, data: Partial<EditScheduleDTO>): Promise<Schedule | null> {
         return prisma.schedule.update({
             where: { id },

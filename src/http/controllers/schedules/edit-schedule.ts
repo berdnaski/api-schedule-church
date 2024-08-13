@@ -31,7 +31,7 @@ export async function editSchedule(req: FastifyRequest<{ Params: { scheduleId: s
 
         reply.status(200).send({ message: "Schedule updated successfully." });
     } catch (error) {
-        console.error("Error details:", error); // Adicione logs detalhados
+        console.error("Error details:", error);
         reply.status(400).send({ error: "Invalid request data or schedule not found." });
     }
 }

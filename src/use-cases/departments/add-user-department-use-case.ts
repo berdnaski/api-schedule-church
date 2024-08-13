@@ -14,11 +14,17 @@ export class AddUserDepartmentUseCase {
             throw new Error("Department not found");
         }
 
-        const user = await this.usersRepository.updateDepartment(userId, departmentId, true);
-
+        const user = await this.usersRepository.findById(userId);
         if (!user) {
             throw new Error("User not found");
         }
+
+        const isInDepartment = user.departments.some(dept => dept.id === departmentId);
+        if (isInDepartment) {
+            throw new Error("User is already in the department");
+        }
+
+        await this.usersRepository.updateDepartment(userId, departmentId, true);
 
         return {
             id: user.id,
