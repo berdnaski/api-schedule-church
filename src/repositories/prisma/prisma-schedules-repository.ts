@@ -1,34 +1,51 @@
-// src/repositories/prisma/prisma-schedules-repository.ts
-import { PrismaClient, Prisma, Schedule } from "@prisma/client";
+import { Prisma, PrismaClient, Schedule } from "@prisma/client";
 import { SchedulesRepository } from "../schedules-repository";
-import { EditScheduleDTO } from "@/use-cases/dtos/edit-schedule-dto";
-
-const prisma = new PrismaClient();
 
 export class PrismaSchedulesRepository implements SchedulesRepository {
-    async delete(id: string) {
-        await prisma.schedule.delete({
-            where: {
-                id,
-            }
-        })
-    }
-    async update(id: string, data: Partial<EditScheduleDTO>): Promise<Schedule | null> {
-        return prisma.schedule.update({
-            where: { id },
-            data, 
-        });
+    private prisma = new PrismaClient();
+
+    async create(data: Prisma.ScheduleCreateInput): Promise<Schedule> {
+        return this.prisma.schedule.create({ data });
     }
 
     async findById(id: string): Promise<Schedule | null> {
-        return prisma.schedule.findUnique({
-            where: { id },
-        });
+        return this.prisma.schedule.findUnique({ where: { id } });
     }
 
-    async create(data: Prisma.ScheduleCreateInput): Promise<Schedule> {
-        return prisma.schedule.create({
-            data,
+    async update(id: string, data: Prisma.ScheduleUpdateInput): Promise<Schedule | null> {
+        return this.prisma.schedule.update({ where: { id }, data });
+    }
+
+    async delete(id: string): Promise<void> {
+        await this.prisma.schedule.delete({ where: { id } });
+    }
+
+    async addParticipant(scheduleId: string, userId: string): Promise<void> {
+        const schedule = await this.prisma.schedule.findUnique({
+            where: { id: scheduleId },
+            include: { participants: true }
+        });
+
+        if (!schedule) {
+            throw new Error("Schedule not found");
+        }
+
+        const isAlreadyParticipant = schedule.participants.some(participant => participant.userId === userId);
+        if (isAlreadyParticipant) {
+            throw new Error("User is already a participant in this schedule");
+        }
+
+        const user = await this.prisma.user.findUnique({ where: { id: userId } });
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        await this.prisma.scheduleParticipant.create({
+            data: {
+                scheduleId: scheduleId,
+                userId: userId,
+                status: 'PENDING' 
+            }
         });
     }
 }

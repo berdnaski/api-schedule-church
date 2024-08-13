@@ -5,4 +5,5 @@ export interface SchedulesRepository {
     findById(id: string): Promise<Schedule | null>
     update(id: string, data: Prisma.ScheduleUpdateInput): Promise<Schedule | null>
     delete(id: string): Promise<void>
+    addParticipant(scheduleId: string, userId: string): Promise<void>;
 }

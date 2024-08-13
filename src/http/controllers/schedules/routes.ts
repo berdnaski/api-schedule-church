@@ -3,6 +3,7 @@ import { FastifyInstance } from "fastify";
 import { createSchedule } from "./create-schedule";
 import { editSchedule } from "./edit-schedule";
 import { deleteSchedule } from "./delete-schedule";
+import { addScheduleParticipant } from "./add-participant-schedule";
 
 export async function schedulesRoutes(app: FastifyInstance) {
     app.addHook('onRequest', verifyJWT);
@@ -10,4 +11,5 @@ export async function schedulesRoutes(app: FastifyInstance) {
     app.post('/schedules', createSchedule);
     app.put('/schedules/:scheduleId', editSchedule);
     app.delete('/schedules/:scheduleId', deleteSchedule);
+    app.post('/schedules/:scheduleId/participants', addScheduleParticipant);
 }
