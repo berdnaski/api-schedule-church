@@ -1,7 +1,7 @@
-import { DepartmentsRepository } from "@/repositories/departments-repository";
+import { Schedule } from "@prisma/client";
 import { SchedulesRepository } from "@/repositories/schedules-repository";
-import { Prisma, Schedule } from "@prisma/client";
-import { CreateScheduleDTO } from "../dtos/create-schedule-dto";
+import { DepartmentsRepository } from "@/repositories/departments-repository";
+import { ScheduleDTO } from "../dtos/schedule-dto";
 
 export class CreateScheduleUseCase {
     constructor(
@@ -9,10 +9,10 @@ export class CreateScheduleUseCase {
         private departmentsRepository: DepartmentsRepository,
     ) {}
 
-    async execute(departmentId: string, data: CreateScheduleDTO): Promise<Schedule> {
+    async execute(departmentId: string, data: ScheduleDTO): Promise<Schedule> {
         const department = await this.departmentsRepository.findById(departmentId);
         
-        if(!department) {
+        if (!department) {
             throw new Error("Department not found");
         }
 

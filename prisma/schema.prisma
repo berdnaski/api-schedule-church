@@ -8,15 +8,15 @@ datasource db {
 }
 
 model User {
-  id            String       @id @default(uuid())
+  id            String                @id @default(uuid())
   name          String
-  email         String       @unique
+  email         String                @unique
   password_hash String
-  role          Role         @default(MEMBER)
-  departments   Department[] @relation("UserDepartments")
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  schedules     Schedule[]   @relation("UserSchedules")
+  role          Role                  @default(MEMBER)
+  departments   Department[]          @relation("UserDepartments")
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+  schedules     ScheduleParticipant[] @relation("UserSchedules") // Correção aqui
 
   @@map("users")
 }
@@ -41,15 +41,34 @@ model Department {
 }
 
 model Schedule {
-  id           String     @id @default(uuid())
+  id           String                @id @default(uuid())
   departmentId String
   name         String
   date         DateTime
-  time         DateTime
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  department   Department @relation(fields: [departmentId], references: [id])
-  users        User[]     @relation("UserSchedules")
+  time         String
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+  department   Department            @relation(fields: [departmentId], references: [id])
+  participants ScheduleParticipant[] @relation("ScheduleParticipants")
 
   @@map("schedules")
+}
+
+model ScheduleParticipant {
+  id         String   @id @default(uuid())
+  scheduleId String
+  userId     String
+  status     Status   @default(PENDING)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], name: "UserSchedules")
+  schedule   Schedule @relation(fields: [scheduleId], references: [id], name: "ScheduleParticipants")
+
+  @@map("schedule_participants")
+}
+
+enum Status {
+  ACCEPTED
+  REJECTED
+  PENDING
 }
