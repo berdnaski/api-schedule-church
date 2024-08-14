@@ -64,6 +64,7 @@ model ScheduleParticipant {
   user       User     @relation(fields: [userId], references: [id], name: "UserSchedules")
   schedule   Schedule @relation(fields: [scheduleId], references: [id], name: "ScheduleParticipants")
 
+  @@unique([scheduleId, userId])
   @@map("schedule_participants")
 }
 

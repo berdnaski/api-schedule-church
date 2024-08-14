@@ -48,4 +48,48 @@ export class PrismaSchedulesRepository implements SchedulesRepository {
             }
         });
     }
+
+    async updateParticipantStatus(scheduleId: string, userId: string, status: 'ACCEPTED' | 'REJECTED'): Promise<void> {
+        const scheduleParticipant = await this.prisma.scheduleParticipant.findUnique({
+            where: {
+                scheduleId_userId: {
+                    scheduleId,
+                    userId
+                }
+            }
+        });
+
+        if (!scheduleParticipant) {
+            throw new Error("Participant not found in this schedule");
+        }
+
+        await this.prisma.scheduleParticipant.update({
+            where: {
+                id: scheduleParticipant.id
+            },
+            data: {
+                status
+            }
+        });
+    }
+
+    async removeParticipant(scheduleId: string, userId: string) {
+        await this.prisma.scheduleParticipant.deleteMany({
+            where: {
+                scheduleId,
+                userId
+            }
+        });
+    }
+
+    async findParticipant(scheduleId: string, userId: string) {
+        return this.prisma.scheduleParticipant.findUnique({
+            where: {
+                scheduleId_userId: {
+                    scheduleId,
+                    userId
+                }
+            }
+        });
+    }
 }

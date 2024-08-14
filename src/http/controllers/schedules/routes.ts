@@ -4,6 +4,9 @@ import { createSchedule } from "./create-schedule";
 import { editSchedule } from "./edit-schedule";
 import { deleteSchedule } from "./delete-schedule";
 import { addScheduleParticipant } from "./add-participant-schedule";
+import { updateParticipantStatus } from "./update-participant-status";
+import { removeParticipantSchedule } from "./remove-participant-schedule";
+import { verifyUserRole } from "@/http/middlewares/veriffy-user-role";
 
 export async function schedulesRoutes(app: FastifyInstance) {
     app.addHook('onRequest', verifyJWT);
@@ -12,4 +15,6 @@ export async function schedulesRoutes(app: FastifyInstance) {
     app.put('/schedules/:scheduleId', editSchedule);
     app.delete('/schedules/:scheduleId', deleteSchedule);
     app.post('/schedules/:scheduleId/participants', addScheduleParticipant);
+    app.post('/schedule/participant/status', updateParticipantStatus);
+    app.delete('/schedules/:scheduleId/participants/:userId/remove', { onRequest: [verifyUserRole('ADMIN', 'LEADER')] }, removeParticipantSchedule);
 }
