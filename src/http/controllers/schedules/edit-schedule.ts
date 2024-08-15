@@ -6,24 +6,23 @@ import { EditScheduleDTO } from "@/use-cases/dtos/edit-schedule-dto";
 export async function editSchedule(req: FastifyRequest<{ Params: { scheduleId: string } }>, reply: FastifyReply) {
     const editScheduleSchema = z.object({
         name: z.string().min(1).optional(),
-        date: z.string().optional(),  // Usa string para validação
-        time: z.string().optional()   // Usa string para validação
+        date: z.string().optional(),
+        time: z.string().optional()   
     });
 
     try {
         const { scheduleId } = req.params;
         const parsedData = editScheduleSchema.parse(req.body);
 
-        // Montando o objeto de dados para atualizar
         const updatedData: Partial<EditScheduleDTO> = {};
         if (parsedData.name) {
             updatedData.name = parsedData.name;
         }
         if (parsedData.date) {
-            updatedData.date = new Date(parsedData.date);  // Converte para Date
+            updatedData.date = new Date(parsedData.date);  
         }
         if (parsedData.time) {
-            updatedData.time = new Date(`1970-01-01T${parsedData.time}Z`).toISOString(); // Converte para string no formato ISO
+            updatedData.time = new Date(`1970-01-01T${parsedData.time}Z`).toISOString();
         }
 
         const editScheduleUseCase = makeEditScheduleUseCase();

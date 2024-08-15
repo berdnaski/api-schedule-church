@@ -3,7 +3,6 @@ import { dateSchema, timeSchema } from "@/lib/interfaces/validation";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
-
 export async function createSchedule(req: FastifyRequest, reply: FastifyReply) {
     const createScheduleSchema = z.object({
         departmentId: z.string().uuid(),
@@ -23,7 +22,8 @@ export async function createSchedule(req: FastifyRequest, reply: FastifyReply) {
         const localDate = new Date(scheduleDate.toLocaleString('en-US', { timeZone: 'UTC' }));
 
         const createScheduleUseCase = makeCreateScheduleUseCase();
-        const schedule = await createScheduleUseCase.execute(departmentId, {
+        const schedule = await createScheduleUseCase.execute({
+            departmentId,
             name,
             date: localDate, 
             time
@@ -32,6 +32,6 @@ export async function createSchedule(req: FastifyRequest, reply: FastifyReply) {
         reply.status(201).send(schedule);
     } catch (error) {
         console.error(error);
-        reply.status(400).send();
+        reply.status(400).send({ message: "Invalid request data." });
     }
 }

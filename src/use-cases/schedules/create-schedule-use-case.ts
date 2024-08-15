@@ -9,8 +9,8 @@ export class CreateScheduleUseCase {
         private departmentsRepository: DepartmentsRepository,
     ) {}
 
-    async execute(departmentId: string, data: ScheduleDTO): Promise<Schedule> {
-        const department = await this.departmentsRepository.findById(departmentId);
+    async execute(data: ScheduleDTO): Promise<Schedule> {
+        const department = await this.departmentsRepository.findById(data.departmentId);
         
         if (!department) {
             throw new Error("Department not found");
@@ -20,7 +20,7 @@ export class CreateScheduleUseCase {
             name: data.name,
             date: data.date,
             time: data.time,
-            department: { connect: { id: departmentId } }
+            department: { connect: { id: data.departmentId } }
         });
     }
 }

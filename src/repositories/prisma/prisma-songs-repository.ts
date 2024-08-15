@@ -14,4 +14,17 @@ export class PrismaSongsRepository implements SongsRepository {
     async delete(id: string): Promise<void> {
         await this.prisma.song.delete({ where: { id } });
     }
+
+    async findById(id: string): Promise<Song | null> {
+        return prisma.song.findUnique({
+            where: { id },
+        });
+    }
+
+    async update(id: string, data: Prisma.SongUpdateInput): Promise<Song | null> {
+        return this.prisma.song.update({
+            where: { id },
+            data
+        });
+    }
 }
