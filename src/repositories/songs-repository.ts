@@ -5,4 +5,5 @@ export interface SongsRepository {
     delete(id: string): Promise<void>;
     findById(id: string): Promise<Song | null>;
     update(id: string, data: Prisma.SongUpdateInput): Promise<Song | null>;
+    listAll(): Promise<Song[]>;
 }

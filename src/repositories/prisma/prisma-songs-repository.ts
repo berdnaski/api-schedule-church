@@ -27,4 +27,8 @@ export class PrismaSongsRepository implements SongsRepository {
             data
         });
     }
+
+    async listAll(): Promise<Song[]> {
+        return this.prisma.song.findMany();
+    }
 }

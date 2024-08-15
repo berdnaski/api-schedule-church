@@ -3,6 +3,7 @@ import { verifyJWT } from "@/http/middlewares/verify-jwt";
 import { createSong } from "./create-songs";
 import { deleteSong } from "./delete-song";
 import { editSong } from "./edit-songs";
+import { listAllSongs } from "./list-songs";
 
 export async function songsRoutes(app: FastifyInstance) {
     app.addHook('onRequest', verifyJWT);
@@ -10,4 +11,5 @@ export async function songsRoutes(app: FastifyInstance) {
     app.post('/songs', createSong);
     app.delete('/songs/:songId', deleteSong);
     app.put('/songs/:songId', editSong);
+    app.get('/songs', listAllSongs);
 }
