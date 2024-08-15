@@ -1,12 +1,17 @@
 import { PrismaClient, Prisma, Song } from "@prisma/client";
 import { SongsRepository } from "../songs-repository";
-
-const prisma = new PrismaClient();
+import { prisma } from './../../lib/prisma';
 
 export class PrismaSongsRepository implements SongsRepository {
-    create(data: Prisma.SongCreateInput): Promise<Song> {
+    private prisma = new PrismaClient();
+
+    async create(data: Prisma.SongCreateInput): Promise<Song> {
         return prisma.song.create({
             data,
         })
+    }
+
+    async delete(id: string): Promise<void> {
+        await this.prisma.song.delete({ where: { id } });
     }
 }
