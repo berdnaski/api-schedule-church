@@ -7,6 +7,7 @@ import { usersRoutes } from "./http/controllers/users/routes";
 import { authRoutes } from "./http/controllers/auth/routes";
 import { departmentsRoutes } from "./http/controllers/departments/routes";
 import { schedulesRoutes } from "./http/controllers/schedules/routes";
+import { songsRoutes } from "./http/controllers/songs/routes";
 
 export const app = fastify();
 
@@ -30,6 +31,8 @@ app.register(authRoutes);
 app.register(departmentsRoutes);
 
 app.register(schedulesRoutes);
+
+app.register(songsRoutes);
 
 app.setErrorHandler((error, _, reply) => {
     if(error instanceof ZodError) {

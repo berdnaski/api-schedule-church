@@ -73,3 +73,29 @@ enum Status {
   REJECTED
   PENDING
 }
+
+model Song {
+  id        String        @id @default(uuid())
+  title     String
+  artist    String
+  genre     String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  versions  SongVersion[]
+
+  @@map("songs")
+}
+
+model SongVersion {
+  id             String   @id @default(uuid())
+  songId         String
+  classification String
+  key            String
+  link_chord     String
+  link_video     String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  song           Song     @relation(fields: [songId], references: [id])
+
+  @@map("song_version")
+}
