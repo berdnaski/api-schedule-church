@@ -15,6 +15,7 @@ export class ListUsersUseCase {
             name: user.name,
             email: user.email,
             role: user.role,
+            departments: user.departments,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
         }));

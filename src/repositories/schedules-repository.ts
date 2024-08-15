@@ -9,4 +9,6 @@ export interface SchedulesRepository {
     updateParticipantStatus(scheduleId: string, userId: string, status: 'ACCEPTED' | 'REJECTED'): Promise<void>;
     findParticipant(scheduleId: string, userId: string): Promise<ScheduleParticipant | null>
     removeParticipant(scheduleId: string, userId: string): Promise<void>;
+    listAll(): Promise<Schedule[]>;
+    findByDepartment(departmentId: string): Promise<Schedule[]>;
 }

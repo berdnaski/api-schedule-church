@@ -92,4 +92,14 @@ export class PrismaSchedulesRepository implements SchedulesRepository {
             }
         });
     }
+
+    async listAll(): Promise<Schedule[]> {
+        return this.prisma.schedule.findMany();
+    }
+
+    async findByDepartment(departmentId: string): Promise<Schedule[]> {
+        return this.prisma.schedule.findMany({
+            where: { departmentId },
+        });
+    }
 }
