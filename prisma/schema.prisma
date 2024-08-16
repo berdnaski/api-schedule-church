@@ -88,6 +88,7 @@ model Song {
 
 model SongVersion {
   id             String   @id @default(uuid())
+  version_name   String
   songId         String
   classification String
   key            String
