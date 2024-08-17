@@ -10,8 +10,12 @@ import { updateUserRole } from "./updated-user-role";
 export async function usersRoutes(app: FastifyInstance) {
     app.post('/register', register);
 
-    app.addHook('onRequest', verifyJWT);
-    // Authenticated
+    app.addHook('onRequest', async (req, reply) => {
+        if (req.url === '/register') return;
+
+        await verifyJWT(req, reply);
+    });
+
     app.get('/dashboard', dashboard);
 
     app.get('/users', { onRequest: [verifyUserRole('ADMIN')] }, listUsers);
