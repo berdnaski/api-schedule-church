@@ -8,9 +8,9 @@ import { updateUserRole } from "./updated-user-role";
 
 
 export async function usersRoutes(app: FastifyInstance) {
-    app.post('/users', register)
+    app.post('/register', register);
 
-    app.addHook('onRequest', verifyJWT)
+    app.addHook('onRequest', verifyJWT);
     // Authenticated
     app.get('/dashboard', dashboard);
 
