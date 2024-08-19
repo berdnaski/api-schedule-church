@@ -1,10 +1,18 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+interface User {
+    role: 'MEMBER' | 'ADMIN' | 'LEADER';
+}
+
 export function verifyUserRole(...roles: ('MEMBER' | 'ADMIN' | 'LEADER')[]) {
     return async (req: FastifyRequest, reply: FastifyReply) => {
-        const user = req.user as { role: 'MEMBER' | 'ADMIN' | 'LEADER' };
+        const user = req.user as User;
 
-        if (!user || !roles.includes(user.role)) {
+        if(!user) {
+            return reply.status(403).send({ message: 'Unauthorized' });
+        }
+
+        if(!roles.includes(user.role)) {
             return reply.status(403).send({ message: 'Forbidden' });
         }
     };

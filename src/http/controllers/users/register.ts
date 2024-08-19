@@ -17,19 +17,53 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
         const usersRepository = new PrismaUsersRepository();
         const registerUseCase = new RegisterUseCase(usersRepository);
 
-        await registerUseCase.execute({
+        const { user } = await registerUseCase.execute({
             name,
             email,
             password,
         });
 
-        return reply.status(201).send();
+        const token = await reply.jwtSign(
+            {
+                role: user.role,
+            },
+            {
+                sign: {
+                    sub: user.id,
+                },
+            },
+        );
+
+        const refreshToken = await reply.jwtSign(
+            {
+                role: user.role,
+            },
+            {
+                sign: {
+                    sub: user.id,
+                    expiresIn: '7d',
+                },
+            },
+        );
+
+        return reply
+            .setCookie('refreshToken', refreshToken, {
+                path: '/',
+                secure: true,
+                sameSite: true,
+                httpOnly: true,
+            })
+            .status(201)
+            .send({
+                token,
+            });
+            
     } catch (err) {
         if (err instanceof UserAlreadyExistsError) {
             return reply.status(409).send({ message: err.message });
         }
 
-        console.error("Register error:", err);  // Adiciona um log de erro
+        console.error("Register error:", err); 
         return reply.status(500).send({ message: "Internal server error." });
     }
 }
