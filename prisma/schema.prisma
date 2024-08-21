@@ -17,6 +17,7 @@ model User {
   createdAt     DateTime              @default(now())
   updatedAt     DateTime              @updatedAt
   schedules     ScheduleParticipant[] @relation("UserSchedules") // Correção aqui
+  LeaderRequest LeaderRequest[]
 
   @@map("users")
 }
@@ -99,4 +100,22 @@ model SongVersion {
   song           Song     @relation(fields: [songId], references: [id])
 
   @@map("song_version")
+}
+
+model LeaderRequest {
+  id               String        @id @default(uuid())
+  userId           String
+  status           RequestStatus @default(PENDING)
+  verificationCode String
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  user             User          @relation(fields: [userId], references: [id])
+
+  @@map("leader_requests")
+}
+
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
 }

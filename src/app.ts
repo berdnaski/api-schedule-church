@@ -11,6 +11,7 @@ import { songsVersionRoutes } from './http/controllers/songVersion/routes';
 import { ZodError } from 'zod';
 import { env } from './env';
 import { adminRoutes } from './http/controllers/admin/routes';
+import { leaderRequesRoutes } from './http/controllers/leader-request/routes';
 
 export const app = fastify();
 
@@ -41,6 +42,7 @@ app.register(schedulesRoutes);
 app.register(songsRoutes);
 app.register(songsVersionRoutes);
 app.register(adminRoutes);
+app.register(leaderRequesRoutes);
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
