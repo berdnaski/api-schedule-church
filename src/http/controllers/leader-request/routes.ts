@@ -1,8 +1,12 @@
+import { verifyUserRole } from "@/http/middlewares/veriffy-user-role";
+import { updateLeaderRequest } from "./update-leader-request";
+import { createLeaderRequest } from "./create-leader-request";
 import { FastifyInstance } from "fastify";
 import { verifyJWT } from "@/http/middlewares/verify-jwt";
-import { createLeaderRequest } from "./create-leader-request";
 
-export async function leaderRequesRoutes(app: FastifyInstance) {
-  app.addHook('onRequest', verifyJWT);
-  app.post('/leader-request', createLeaderRequest);
+export async function leaderRequestRoutes(app: FastifyInstance) {
+    app.addHook('onRequest', verifyJWT); // Middleware global para autenticação JWT
+
+    app.post('/leader-requests', createLeaderRequest);
+    app.put('/leader-requests/:id', { onRequest: verifyUserRole('ADMIN') }, updateLeaderRequest);
 }

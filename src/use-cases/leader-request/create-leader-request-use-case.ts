@@ -1,28 +1,20 @@
 import { LeaderRequestRepository } from "@/repositories/leader-request-repository";
-import { LeaderRequest } from "@prisma/client";
 
-interface CreateLeaderRequestInput {
-  id: string; 
+interface CreateLeaderRequestDTO {
+    userId: string;
+    status: 'PENDING';
 }
 
 export class CreateLeaderRequestUseCase {
-  constructor(private leaderRequestRepo: LeaderRequestRepository) {}
+    constructor(
+        private leaderRequestRepository: LeaderRequestRepository
+    ) {}
 
-  async execute(input: CreateLeaderRequestInput): Promise<LeaderRequest> {
-    const { id } = input;
-
-    const existingRequest = await this.leaderRequestRepo.findById(id);
-
-    if (existingRequest) {
-      throw new Error('Você já tem uma solicitação pendente.');
+    async execute(data: CreateLeaderRequestDTO) {
+        const { userId, status } = data;
+        return this.leaderRequestRepository.create({
+            userId, 
+            status,
+        });
     }
-
-    const verificationCode = this.generateVerificationCode();
-
-    return this.leaderRequestRepo.create(id, verificationCode);
-  }
-
-  private generateVerificationCode(): string {
-    return Math.random().toString(36).slice(2, 8).toUpperCase();
-  }
 }
