@@ -1,28 +1,31 @@
-import { createUpdateLeaderRequestUseCase } from "@/lib/factories/create-update-leader-request-use-case";
+import { createUpdateLeaderRequestUseCase as makeUpdateLeaderRequestUseCase } from "@/lib/factories/make-update-leader-request-use-case";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
 const updateLeaderRequestSchema = z.object({
-    id: z.string().uuid(),
-    status: z.enum(['ACCEPTED', 'REJECTED']),
+  id: z.string().uuid(),
+  isAccepted: z.union([z.boolean(), z.string()]).transform((val) => {
+    if (typeof val === "boolean") return val;
+    return val.toLowerCase() === "true";
+  }),
 });
 
-export async function updateLeaderRequest(req: FastifyRequest, reply: FastifyReply) {
-    try {
-        const { id, status } = updateLeaderRequestSchema.parse(req.body);
+export async function updateLeaderRequest(
+  req: FastifyRequest,
+  reply: FastifyReply
+) {
+  try {
+    const params = updateLeaderRequestSchema.parse(req.params);
 
-        const requestUserId = req.user.sub;
+    const updateLeaderRequestUseCase = makeUpdateLeaderRequestUseCase();
+    await updateLeaderRequestUseCase.execute({
+      id: params.id,
+      isAccepted: params.isAccepted,
+    });
 
-        const updateLeaderRequestUseCase = createUpdateLeaderRequestUseCase();
-        await updateLeaderRequestUseCase.execute({
-            id,
-            status,
-            requestUserId,
-        });
-
-        return reply.status(200).send();
-    } catch (error) {
-        console.error(error);
-        reply.status(400).send({ message: "Invalid request dddata." });
-    }
+    return reply.status(200).send();
+  } catch (error) {
+    console.error(error);
+    reply.status(400).send({ message: "Invalid request data." });
+  }
 }
