@@ -6,6 +6,7 @@ interface User {
 
 export function verifyUserRole(...roles: ("MEMBER" | "ADMIN" | "LEADER")[]) {
   return async (req: FastifyRequest, reply: FastifyReply) => {
+    console.log(req.user);
     const user = req.user as User;
 
     if (!user) {
