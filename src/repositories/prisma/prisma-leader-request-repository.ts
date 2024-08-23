@@ -1,18 +1,22 @@
-import { PrismaClient, LeaderRequest } from "@prisma/client";
-import { LeaderRequestRepository } from "@/repositories/leader-request-repository";
+import { PrismaClient, LeaderRequest, User } from "@prisma/client";
+import { LeaderRequestRepository } from "../leader-request-repository";
+
+type LeaderRequestWithUser = LeaderRequest & { user: User };
 
 export class PrismaLeaderRequestRepository implements LeaderRequestRepository {
   private prisma = new PrismaClient();
 
-  async create(data: {
-    userId: string;
-    status: "PENDING";
-  }): Promise<LeaderRequest> {
+  async create(data: { userId: string; status: "PENDING"; name: string }): Promise<LeaderRequest> {
     return this.prisma.leaderRequest.create({
       data: {
-        user: { connect: { id: data.userId } },
+        user: {
+          connect: {
+            id: data.userId
+          }
+        },
         status: data.status,
-      },
+        name: data.name
+      }
     });
   }
 
@@ -22,17 +26,21 @@ export class PrismaLeaderRequestRepository implements LeaderRequestRepository {
     });
   }
 
-  async updateStatus(
-    id: string,
-    status: "ACCEPTED" | "REJECTED"
-  ): Promise<LeaderRequest> {
+  async updateStatus(id: string, status: "ACCEPTED" | "REJECTED"): Promise<LeaderRequest> {
     return this.prisma.leaderRequest.update({
       where: { id },
       data: { status },
     });
   }
 
-  async listAll(): Promise<LeaderRequest[]> {
-    return this.prisma.leaderRequest.findMany();
+  async findAll(): Promise<LeaderRequestWithUser[]> {
+    return this.prisma.leaderRequest.findMany({
+      where: {
+        status: 'PENDING',
+      },
+      include: {
+        user: true, 
+      },
+    });
   }
 }

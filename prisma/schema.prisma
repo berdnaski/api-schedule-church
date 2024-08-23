@@ -104,6 +104,7 @@ model SongVersion {
 
 model LeaderRequest {
   id        String              @id @default(uuid())
+  name      String
   userId    String
   status    LeaderRequestStatus @default(PENDING)
   createdAt DateTime            @default(now())
