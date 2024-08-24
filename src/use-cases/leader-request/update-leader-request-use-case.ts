@@ -20,6 +20,7 @@ export class UpdateLeaderRequestUseCase {
 
     const status = isAccepted ? "ACCEPTED" : "REJECTED";
     console.log("status", status);
+    
     await this.leaderRequestRepository.updateStatus(id, status);
 
     if(isAccepted) {

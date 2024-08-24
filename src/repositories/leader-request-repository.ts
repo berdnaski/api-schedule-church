@@ -8,4 +8,5 @@ export interface LeaderRequestRepository {
     status: "ACCEPTED" | "REJECTED"
   ): Promise<LeaderRequest>;
   findAll(): Promise<LeaderRequest[]>;
+  hasPendingRequest(userId: string): Promise<boolean>;
 }

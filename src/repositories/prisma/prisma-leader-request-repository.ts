@@ -43,4 +43,14 @@ export class PrismaLeaderRequestRepository implements LeaderRequestRepository {
       },
     });
   }
+
+  async hasPendingRequest(userId: string): Promise<boolean> {
+    const pendingRequest = await this.prisma.leaderRequest.findFirst({
+      where: {
+        userId,
+        status: 'PENDING',
+      }
+    });
+    return !!pendingRequest;
+  }
 }

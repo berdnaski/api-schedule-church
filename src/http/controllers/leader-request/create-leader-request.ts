@@ -11,7 +11,6 @@ export async function createLeaderRequest(req: FastifyRequest, reply: FastifyRep
   try {
     const { userId, status } = createLeaderRequestSchema.parse(req.body);
 
-    // Cria o caso de uso com os repositórios necessários
     const createLeaderRequestUseCase = createCreateLeaderRequestUseCase();
     await createLeaderRequestUseCase.execute({
       userId,
@@ -27,7 +26,7 @@ export async function createLeaderRequest(req: FastifyRequest, reply: FastifyRep
       });
     } else {
       console.error(error);
-      reply.status(500).send({ error: "Falha ao criar solicitação." });
+      reply.status(500).send({ error: "Já existe uma solicitação pendente para este usuário." });
     }
   }
 }

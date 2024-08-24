@@ -16,6 +16,12 @@ export class CreateLeaderRequestUseCase {
   async execute(data: CreateLeaderRequestDTO): Promise<LeaderRequest> {
     const { userId, status } = data;
 
+    const hasPendingRequest = await this.leaderRequestRepository.hasPendingRequest(userId);
+
+    if(hasPendingRequest) {
+      throw new Error("Já existe uma solicitação pendente para este usuário");
+    }
+
     const user = await this.userRepository.findById(userId);
     if (!user) {
       throw new Error("Usuário não encontrado");

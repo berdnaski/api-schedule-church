@@ -16,7 +16,7 @@ import { leaderRequestRoutes } from './http/controllers/leader-request/routes';
 export const app = fastify();
 
 app.register(cors, {
-  origin: 'http://localhost:5173', // URL do frontend
+  origin: 'http://localhost:5173', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'], 
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header'],
   credentials: true,
