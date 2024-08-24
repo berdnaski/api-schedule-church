@@ -7,11 +7,13 @@ export class ListLeaderRequestsUseCase {
   async execute(): Promise<{ leaderRequests: LeaderRequestDTO[] }> {
     const leaderRequests = await this.leaderRequestRepository.findAll();
 
-    const listLeaderRequests: LeaderRequestDTO[] = leaderRequests.map(request => ({
-      id: request.id,
-      name: request.name,
-      status: request.status,
-    }));
+    const listLeaderRequests: LeaderRequestDTO[] = leaderRequests.map(
+      (request) => ({
+        id: request.id,
+        name: request.name,
+        status: request.status,
+      })
+    );
 
     return { leaderRequests: listLeaderRequests };
   }
