@@ -16,8 +16,9 @@ model User {
   departments   Department[]          @relation("UserDepartments")
   createdAt     DateTime              @default(now())
   updatedAt     DateTime              @updatedAt
-  schedules     ScheduleParticipant[] @relation("UserSchedules") // Correção aqui
+  schedules     ScheduleParticipant[] @relation("UserSchedules")
   LeaderRequest LeaderRequest[]
+  Department    Department[]
 
   @@map("users")
 }
@@ -34,6 +35,8 @@ model Department {
   description String
   schedules   Schedule[]
   users       User[]     @relation("UserDepartments")
+  userId      String
+  user        User       @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

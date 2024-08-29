@@ -27,6 +27,12 @@ export class PrismaDepartments implements DepartmentsRepository {
         });
     }
 
+    async findByUserId(userId: string): Promise<Department | null> {
+        return prisma.department.findFirst({
+            where: { userId },
+        });
+    }
+
     async create(data: Prisma.DepartmentCreateInput): Promise<Department> {
         return prisma.department.create({
             data,
